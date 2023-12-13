@@ -8,7 +8,9 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User
+from models import db, User, Characters
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 #from models import Person
 
 app = Flask(__name__)
@@ -41,6 +43,21 @@ def handle_hello():
 
     response_body = {
         "msg": "Hello, this is your GET /user response "
+    }
+
+    return jsonify(response_body), 200
+
+# Characters
+@app.route('/characters', methods=['GET'])
+def handle_all_characters():
+
+    characters = Characters.query.all()
+    serialized_characters = [character.serialize() for character in characters]
+
+    response_body = {
+        "characters": serialized_characters,
+        "msg": "Hello, esto es tu GET de todos los /Characters y responde "
+        
     }
 
     return jsonify(response_body), 200

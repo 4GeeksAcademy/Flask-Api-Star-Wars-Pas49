@@ -11,6 +11,21 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
+class Characters(db.Model):
+    __tablename__ = 'characters'
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    name = db.Column(db.String(50), unique=False, nullable=False)
+    height = db.Column(db.String(50), unique=False, nullable=True)
+    hair_color = db.Column(db.String(50), unique=False, nullable=True)
+    eye_color = db.Column(db.String(20), unique=False, nullable=True)
+    birth_year = db.Column(db.String(20), unique=False, nullable=True)
+    gender = db.Column(db.String(50), unique=False, nullable=True)
+    
+
+    def __repr__(self):
+        return '<Characters %r>' % self.id
+
+
     def serialize(self):
         return {
             "id": self.id,
